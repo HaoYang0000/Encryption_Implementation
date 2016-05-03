@@ -122,10 +122,16 @@ public class Paillier {
 		BigInteger u = g.modPow(lambda, nsquare).subtract(BigInteger.ONE).divide(n).modInverse(n);
 		return c.modPow(lambda, nsquare).subtract(BigInteger.ONE).divide(n).multiply(u).mod(n);
 	}
-
+	
+	public BigInteger computerDistance(BigInteger w,Paillier publicKey){
+		BigInteger result = publicKey.Decryption(w);
+		System.out.println("After computing, x1*x2 is = "+result);
+		return result;
+	}
+	
 	/**
-	 * main function
-	 * @param str intput string
+	 * Old function, not used now
+	 * @param str
 	 */
 	public static void main(String[] str) {
 
@@ -135,11 +141,11 @@ public class Paillier {
 		final int C = 64;
 
 		//Generate Alice's private input: 
-		BigInteger x = generateRandomBigInteger(N);
+		BigInteger x = Utills.generateRandomBigInteger(N);
 		System.out.println("Alice's private input is : "+x);
 
 		//Generate Bob's private input: 
-		BigInteger y = generateRandomBigInteger(N);
+		BigInteger y = Utills.generateRandomBigInteger(N);
 		System.out.println("Bob's private input is : "+y);
 		
 		System.out.println("x*y = "+x.multiply(y));
@@ -171,7 +177,7 @@ public class Paillier {
 		 * Send ci = Encpk(xi; ri) to Bob.
 		 */
 
-		BigInteger r = generateRandomBigInteger(N);
+		BigInteger r = Utills.generateRandomBigInteger(N);
 		System.out.println("The new string ri is "+r);
 
 		BigInteger ci = Alice_PublicKey.Encryption(x,r);
@@ -184,13 +190,13 @@ public class Paillier {
 		 * Send w' = w · Encpk(−sB; r') to Alice.
 		 */
 
-		BigInteger w = BigIntegerPow(ci,y);
+		BigInteger w = Utills.BigIntegerPow(ci,y);
 		System.out.println("w is :"+w);
 		//Random plaintext sB:
-		BigInteger sB = generateRandomBigInteger(N);
+		BigInteger sB = new BigInteger("0");
 		System.out.println("Sb is :"+sB);
 		//Random nonce r': 
-		BigInteger r1 = generateRandomBigInteger(N);
+		BigInteger r1 = Utills.generateRandomBigInteger(N);
 
 		//Computing w'
 		BigInteger w1 = w.multiply(Alice_PublicKey.Encryption(sB.negate(),r1));
@@ -235,55 +241,5 @@ public class Paillier {
 
 	}
 
-	/**
-	 * Function to generate a random vector with n bits
-	 * @param n
-	 * @return
-	 */
-	public static BigInteger generateRandomPriviteInput(int n)
-	{
-		String letters = "01";
-		Random random = new Random();
-		String r = "";
-		for (int i=0; i<n; i++)
-		{
-			int index = (int)(random.nextDouble()*letters.length());
-			r += letters.substring(index, index+1);
-		}
-		return new BigInteger(r);
-	}
 
-	/**
-	 * Function to generate a random BigInteger with n bits
-	 * @param n
-	 * @return
-	 */
-	public static BigInteger generateRandomBigInteger(int n)
-	{
-		String letters = "0123456789";
-		Random random = new Random();
-		String r = "";
-		for (int i=0; i<n; i++)
-		{
-			int index = (int)(random.nextDouble()*letters.length());
-			r += letters.substring(index, index+1);
-		}
-		return new BigInteger(r);
-	}
-
-	/**
-	 * Function to compute Power of BigIntger, base BigInteger
-	 * @param base
-	 * @param exponent
-	 * @return
-	 */
-	public static BigInteger BigIntegerPow(BigInteger base, BigInteger exponent) {
-		BigInteger result = BigInteger.ONE;
-		while (exponent.signum() > 0) {
-			if (exponent.testBit(0)) result = result.multiply(base);
-			base = base.multiply(base);
-			exponent = exponent.shiftRight(1);
-		}
-		return result;
-	}
 }
