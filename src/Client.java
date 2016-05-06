@@ -8,7 +8,9 @@ public class Client {
 	private BigInteger ciX;
 	private BigInteger ciY;
 	private String name;
-	
+	private Paillier privateKey;
+	private Paillier publickKey;
+
 	/**
 	 * Constructors
 	 * 
@@ -45,7 +47,10 @@ public class Client {
 		this.x = x;
 		this.y = y;
 		this.name = name;
+		this.privateKey = new Paillier(64,16);
+		this.publickKey = new Paillier(64,16);
 	}
+
 
 	/**
 	 * Setters and getters
@@ -86,7 +91,7 @@ public class Client {
 	}
 	
 	//Set encrypted value of Enc(x;r) and Enc(y;r)
-	public void setCi(Paillier publickKey,int numberOfBit){
+	public void setCi(int numberOfBit){
 		BigInteger r = Utills.generateRandomBigInteger(numberOfBit);
 		this.ciX = publickKey.Encryption(x,r);
 		this.ciY = publickKey.Encryption(y,r);
@@ -102,6 +107,29 @@ public class Client {
 		return this.ciY;
 	}
 	
+	public Paillier getPrivateKey() {
+		return privateKey;
+	}
+
+	public void setPrivateKey(Paillier privateKey) {
+		this.privateKey = privateKey;
+	}
+
+	public void setCiX(BigInteger ciX) {
+		this.ciX = ciX;
+	}
+
+	public void setCiY(BigInteger ciY) {
+		this.ciY = ciY;
+	}
 	
+
+	public Paillier getPublickKey() {
+		return publickKey;
+	}
+
+	public void setPublickKey(Paillier publickKey) {
+		this.publickKey = publickKey;
+	}
 	
 }

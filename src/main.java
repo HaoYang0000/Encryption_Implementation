@@ -13,13 +13,13 @@ public class main {
 
 		//Number of bit 
 		//After some testing, 2 is working fine, 3 would be takes longer, 4 would takes almost 1 miutes
-		final int N = 4;
+		final int N = 3;
 
 		//List to store all the client
 		ArrayList<Client> list = new ArrayList();
 
 		//Cloud public key
-		Paillier cloud = new Paillier();
+		//Paillier cloud = new Paillier(16,16);
 		
 		System.out.println("---------------------------------");
 		System.out.println("Generating Clients...");
@@ -33,7 +33,7 @@ public class main {
 		//Alice
 		Client Alice = new Client(x1,y1,"Alice");
 		//Encrypt Alice's private input, using a Paillier
-		Alice.setCi(cloud,N);
+		Alice.setCi(N);
 
 		list.add(Alice);
 
@@ -45,7 +45,7 @@ public class main {
 		//Bob
 		Client Bob = new Client(x2,y2,"Bob");
 		//Encrypt Bob's private input, using a Paillier
-		Bob.setCi(cloud,N);
+		Bob.setCi(N);
 
 		list.add(Bob);
 
@@ -57,7 +57,7 @@ public class main {
 		//Charles
 		Client Charles = new Client(x3,y3,"Charles");
 		//Encrypt Charles's private input, using a Paillier
-		Charles.setCi(cloud,N);
+		Charles.setCi(N);
 
 		list.add(Charles);
 
@@ -69,7 +69,7 @@ public class main {
 		//David
 		Client David = new Client(x4,y4,"David");
 		//Encrypt Alice's private input, using a Paillier
-		David.setCi(cloud,N);
+		David.setCi(N);
 
 		list.add(David);
 		
@@ -78,7 +78,7 @@ public class main {
 		System.out.println("Computing Distances...");
 		System.out.println();
 		//Computing distances between clients
-		computeDistance(list,cloud,N);
+		computeDistance(list,N);
 
 
 	}
@@ -89,7 +89,7 @@ public class main {
 	 * @param publicKey
 	 * @param N
 	 */
-	public static void computeDistance(ArrayList<Client> list, Paillier publicKey,int N){
+	public static void computeDistance(ArrayList<Client> list, int N){
 		
 		long start, end;
 		
@@ -102,18 +102,20 @@ public class main {
 				
 				start = System.nanoTime();
 				//Setting x1x2, take public key, two entrypted value and number of bits n as input
-				BigInteger result_xx = Utills.setW(publicKey,list.get(i).getCiX(),list.get(j).getX(),N);
+				BigInteger result_xx = Utills.setW(list.get(i).getPublickKey(),list.get(i).getCiX(),list.get(j).getX(),N);
 				//Setting y1y2, two entrypted value and number of bits n as input
-				BigInteger result_yy = Utills.setW(publicKey,list.get(i).getCiY(),list.get(j).getY(),N);
+				BigInteger result_yy = Utills.setW(list.get(i).getPublickKey(),list.get(i).getCiY(),list.get(j).getY(),N);
 				//Compute distance between two client
-				Utills.computeDistance(list.get(i),list.get(j),publicKey.Decryption(result_xx),publicKey.Decryption(result_yy));
+				Utills.computeDistance(list.get(i),list.get(j),list.get(i).getPublickKey().Decryption(result_xx),list.get(i).getPublickKey().Decryption(result_yy));
 				
 				end = System.nanoTime();
 				
 				double ms = (end-start) / 1000000.0;
 				System.out.println("execution time is = "+ms+"ms");
-				System.out.println();
 				
+				//Testing
+				System.out.println("The result should be : "+ Utills.checkResult(list.get(i),list.get(j)));
+				System.out.println();
 			}
 		}
 	}
