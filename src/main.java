@@ -1,72 +1,122 @@
 import java.math.BigInteger;
-import java.util.Random;
-import paillierp.key.KeyGen;
-import paillierp.Paillier ;
-import paillierp.PaillierThreshold ;
-import paillierp.key.PaillierPrivateThresholdKey ;
-import paillierp.zkp.DecryptionZKP ;
+import java.util.ArrayList;
 
-/******************************************************************************
- *
- * Author:        Hao Yang
- * Date:          04/29/2016
- * Description:   This program encrypt a information from position (x1,y1) and send it to (x2,y2).
- * 				  And would make sure the private information from (x1,y1) is secured. 
- *
- ******************************************************************************/
 
 public class main {
 
-	public static void main(String[] args) {
+
+	/**
+	 * main function for testing
+	 * @author Hao Yang
+	 */
+	public static void main(String[] str) {
+
+		//Number of bit 
+		//After some testing, 2 is working fine, 3 would be takes longer, 4 would takes almost 1 miutes
+		final int N = 4;
+
+		//List to store all the client
+		ArrayList<Client> list = new ArrayList();
+
+		//Cloud public key
+		Paillier cloud = new Paillier();
 		
-		// create random object
-		Random random = new Random();
+		System.out.println("---------------------------------");
+		System.out.println("Generating Clients...");
+		System.out.println();
 
-		//Number of bit
-		final int N = 10;
-		//seed for generating random number
-		long seed = random.nextLong();
+		//Generate Alice's private input: 
+		BigInteger x1 = Utills.generateRandomBigInteger(N);
+		BigInteger y1 = Utills.generateRandomBigInteger(N);
+		System.out.println("Alice's private input is : x: "+x1+", y: "+y1);
 
-		/*
-		 * @param s    Specifies the number of bits required for the prime factor 
-		 *             of n.
-		 * @param l    Number of decryption servers.
-		 * @param w    Threshold number of decryption servers.  Must be
-		 *             &le;&frac12;<code>l</code>
-		 * @param seed Specifies the seed for the random number generator used.
-		 */
-		int s = 8;
-		int l = 4;    
-		int w = 3;
+		//Alice
+		Client Alice = new Client(x1,y1,"Alice");
+		//Encrypt Alice's private input, using a Paillier
+		Alice.setCi(cloud,N);
 
-		//Generate private keys for four private coordinate
-		PaillierPrivateThresholdKey [] keys = KeyGen.PaillierThresholdKey (s,l,w,seed) ;
+		list.add(Alice);
 
-		//Private Inputs
-		PaillierThreshold x1 = new PaillierThreshold (keys[0]) ;
-		PaillierThreshold y1 = new PaillierThreshold (keys[1]) ;
-		PaillierThreshold x2 = new PaillierThreshold (keys[2]) ;
-		PaillierThreshold y2 = new PaillierThreshold (keys[3]) ;
+		//Generate Bob's private input: 
+		BigInteger x2 = Utills.generateRandomBigInteger(N);
+		BigInteger y2 = Utills.generateRandomBigInteger(N);
+		System.out.println("Bob's private input is : x: "+x2+", y: "+y2);
+
+		//Bob
+		Client Bob = new Client(x2,y2,"Bob");
+		//Encrypt Bob's private input, using a Paillier
+		Bob.setCi(cloud,N);
+
+		list.add(Bob);
+
+		//Generate Charles's private input: 
+		BigInteger x3 = Utills.generateRandomBigInteger(N);
+		BigInteger y3 = Utills.generateRandomBigInteger(N);
+		System.out.println("Charles's private input is : x: "+x3+", y: "+y3);
+
+		//Charles
+		Client Charles = new Client(x3,y3,"Charles");
+		//Encrypt Charles's private input, using a Paillier
+		Charles.setCi(cloud,N);
+
+		list.add(Charles);
+
+		//Generate David's private input: 
+		BigInteger x4 = Utills.generateRandomBigInteger(N);
+		BigInteger y4 = Utills.generateRandomBigInteger(N);
+		System.out.println("David's private input is : x: "+x4+", y: "+y4);
+
+		//David
+		Client David = new Client(x4,y4,"David");
+		//Encrypt Alice's private input, using a Paillier
+		David.setCi(cloud,N);
+
+		list.add(David);
 		
-		//Alice encrypts a message and sends msg to Bob
-		BigInteger msg =  new BigInteger(N,random);
-		Paillier alice1 = new Paillier (keys[0].getPublicKey()) ;
-		BigInteger Emsg = alice1.encrypt (msg) ;
-		System.out.println("The message from Alice to Bob is :"+msg);
+		System.out.println();
+		System.out.println("---------------------------------");
+		System.out.println("Computing Distances...");
+		System.out.println();
+		//Computing distances between clients
+		computeDistance(list,cloud,N);
 
-		//Send one of Alice's pubic Key to Bob: aliceShare1 or aliceShare2
-		DecryptionZKP aliceShare1 = x1.decryptProof (Emsg) ;
-		DecryptionZKP aliceShare2 = y1.decryptProof (Emsg) ;
-		DecryptionZKP bobShare1 = x2.decryptProof (Emsg) ;
-		DecryptionZKP bobShare2 = y2.decryptProof (Emsg) ;
-
-		//Bob receive the message and decrypt
-		BigInteger p2decrypt = x2.combineShares ( aliceShare1 , bobShare1 , bobShare2 ) ;
-		if ( p2decrypt.equals (msg) ) {
-			System.out.println ("Bob succeeds decrypting the message:"+msg) ;
-		} else {
-			System.out.println ("Bob fails decrypting the message:"+msg) ;
-		}
 
 	}
+
+	/**
+	 * Function to compute all the distances between Clients and counting time it takes at the same time
+	 * @param list of Client
+	 * @param publicKey
+	 * @param N
+	 */
+	public static void computeDistance(ArrayList<Client> list, Paillier publicKey,int N){
+		
+		long start, end;
+		
+		
+		for(int i=0;i<list.size();i++){
+			for(int j=0;j<list.size();j++){
+				//Not necessary to count their own distance, so skip
+				if(i==j)
+					continue;
+				
+				start = System.nanoTime();
+				//Setting x1x2, take public key, two entrypted value and number of bits n as input
+				BigInteger result_xx = Utills.setW(publicKey,list.get(i).getCiX(),list.get(j).getX(),N);
+				//Setting y1y2, two entrypted value and number of bits n as input
+				BigInteger result_yy = Utills.setW(publicKey,list.get(i).getCiY(),list.get(j).getY(),N);
+				//Compute distance between two client
+				Utills.computeDistance(list.get(i),list.get(j),publicKey.Decryption(result_xx),publicKey.Decryption(result_yy));
+				
+				end = System.nanoTime();
+				
+				double ms = (end-start) / 1000000.0;
+				System.out.println("execution time is = "+ms+"ms");
+				System.out.println();
+				
+			}
+		}
+	}
+
+
 }
