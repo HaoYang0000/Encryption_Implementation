@@ -136,7 +136,7 @@ public class Paillier {
 	public static void main(String[] str) {
 
 		//Number of bit (Only work with two bits now)
-		final int N = 2;
+		final int N = 7;
 		//Certainty number
 		final int C = 64;
 
@@ -162,52 +162,61 @@ public class Paillier {
 		 * the encryption and decryption sometimes doesn't work well and the result are not much.
 		 * Please uncomment the following code to test
 		 */
-//		Paillier testing = new Paillier(10,C);
-//		BigInteger a = new BigInteger("10");
-//		BigInteger e_a = testing.Encryption(a);
-//		System.out.println();
-//		System.out.println("----------------------testing----------------------------");
-//		System.out.println("The value of a is "+a+", the enctypted value is "+e_a+", the dectupted value is "+testing.Decryption(e_a));
-//		System.out.println("----------------------testing----------------------------");
-//		System.out.println();
+		int count = 0;
+		while(count ==0)
+		for(int i=0;i<10000;i++){
+		Paillier testing = new Paillier(64,16);
+		BigInteger a = new BigInteger("1978");
+		BigInteger e_a = testing.Encryption(a);
+		if(testing.Decryption(e_a). compareTo(a) !=0){
+//			System.out.println();
+//			System.out.println("----------------------testing----------------------------");
+//			System.out.println("The value of a is "+a+", the enctypted value is "+e_a+", the dectupted value is ");
+//			System.out.println("----------------------testing----------------------------");
+//			System.out.println();
+			count++;
+		}
 		
+		
+		}
+		System.out.println(count);
 		
 		/* 2. Alice does for i ∈ {1, . . . , N}
 		 * Generate a random new string ri
 		 * Send ci = Encpk(xi; ri) to Bob.
 		 */
-
-		BigInteger r = Utills.generateRandomBigInteger(N);
-		System.out.println("The new string ri is "+r);
-
-		BigInteger ci = Alice_PublicKey.Encryption(x,r);
-		System.out.println("The Encryption value send to Bob is "+ci);
-		
-		
-		/* 3. Bob does:
-		 * Set w
-		 * Generate a random plaintext sB and a random nonce r'
-		 * Send w' = w · Encpk(−sB; r') to Alice.
-		 */
-
-		BigInteger w = Utills.BigIntegerPow(ci,y);
-		System.out.println("w is :"+w);
-		//Random plaintext sB:
-		BigInteger sB = new BigInteger("0");
-		System.out.println("Sb is :"+sB);
-		//Random nonce r': 
-		BigInteger r1 = Utills.generateRandomBigInteger(N);
-
-		//Computing w'
-		BigInteger w1 = w.multiply(Alice_PublicKey.Encryption(sB.negate(),r1));
-		System.out.println("w' is :"+w1);
-		
-		/* 4. Alice does: Compute sA = Decsk(w') = x · y − sB
-		 */
-		System.out.println("After computing, sA = "+Alice_PublicKey.Decryption(w));
-		
-		
-
+//
+//		BigInteger r = Utills.generateRandomBigInteger(N);
+//		System.out.println("The new string ri is "+r);
+//
+//		BigInteger ci = Alice_PublicKey.Encryption(x,r);
+//		System.out.println("The Encryption value send to Bob is "+ci);
+//		
+//		
+//		/* 3. Bob does:
+//		 * Set w
+//		 * Generate a random plaintext sB and a random nonce r'
+//		 * Send w' = w · Encpk(−sB; r') to Alice.
+//		 */
+//
+//		BigInteger w = Utills.BigIntegerPow(ci,y);
+//		System.out.println("w is :"+w);
+//		//Random plaintext sB:
+//		BigInteger sB = new BigInteger("0");
+//		System.out.println("Sb is :"+sB);
+//		//Random nonce r': 
+//		BigInteger r1 = Utills.generateRandomBigInteger(N);
+//
+//		//Computing w'
+//		BigInteger w1 = w.multiply(Alice_PublicKey.Encryption(sB.negate(),r1));
+//		System.out.println("w' is :"+w1);
+//		
+//		/* 4. Alice does: Compute sA = Decsk(w') = x · y − sB
+//		 */
+//		System.out.println("After computing, sA = "+Alice_PublicKey.Decryption(w));
+//		
+//		
+//
 
 		/**
 		 * Code as reference

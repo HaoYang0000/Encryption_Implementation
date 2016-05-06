@@ -84,4 +84,12 @@ public class Utills {
 		BigInteger r1 = Utills.generateRandomBigInteger(N);
 		return w.multiply(publickKey.Encryption(sB.negate(),r1));
 	}
+
+	public static BigInteger checkResult(Client clientA, Client clientB) {
+		BigInteger x1_x2 = clientA.getX().subtract(clientB.getX()).pow(2);
+		BigInteger y1_y2 = clientA.getY().subtract(clientB.getY()).pow(2);
+		
+		
+		return sqrt(x1_x2.add(y1_y2));
+	}
 }
