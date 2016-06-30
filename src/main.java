@@ -22,7 +22,10 @@ public class main {
 		Scanner s = null;
 		ArrayList<String> fileName = new ArrayList<String>();
 		try {
-			s = new Scanner(new File("data/fileName.txt"));
+			//For test case 1
+			s = new Scanner(new File("data/fileName1.txt"));
+			//For test case 2
+			//s = new Scanner(new File("data/fileName2.txt"));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -32,8 +35,13 @@ public class main {
 
 		//List to store all the client
 		ArrayList<Client> list = new ArrayList<Client>();
+		
 		for(int i=0;i<fileName.size();i++){
-			list.add(Parser.readFile("data/testcase/Data/002/Trajectory/"+fileName.get(i)).get(0));
+			//For test case 1
+			list = Parser.readFile("data/testcase/Data/000/Trajectory/"+fileName.get(i));
+			
+			//For test case 2
+			//list.add(Parser.readFile("data/testcase/Data/002/Trajectory/"+fileName.get(i)).get(0));
 		}
 
 		//Initialize the counter, which used to keep the time of computation
