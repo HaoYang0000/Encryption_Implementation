@@ -56,10 +56,17 @@ public class Utills {
 	}
 	
 	public static BigInteger computeDistance(Client a, Client b,BigInteger x1x2, BigInteger y1y2){
-		BigInteger result = a.getXS_YS().add(b.getXS_YS()).subtract(x1x2.multiply(new BigInteger("2"))).subtract(y1y2.multiply(new BigInteger("2")));
-		System.out.println("Distance between : "+a.getName()+" and "+b.getName()+" is "+sqrt(result));
-		return sqrt(result);
+		BigInteger result = sqrt(a.getXS_YS().add(b.getXS_YS()).subtract(x1x2.multiply(new BigInteger("2"))).subtract(y1y2.multiply(new BigInteger("2"))));
+		System.out.println("Distance between : user "+a.getId()+" and user "+b.getId()+" is " +result + "m");
+		return result;
 	}
+	
+//	public static BigInteger computeShortDistance(Client a, Client b,BigInteger x1x2, BigInteger y1y2){
+//		//System.out.println(x1x2+ " " +y1y2+"  "+a.getShortXS_YS());
+//		BigInteger result = sqrt(a.getShortXS_YS().add(b.getShortXS_YS()).subtract(x1x2.multiply(new BigInteger("2"))).subtract(y1y2.multiply(new BigInteger("2"))));
+//		System.out.println("Distance between : "+a.getName()+" and "+b.getName()+" is " +result);
+//		return result;
+//	}
 
 	public static BigInteger sqrt(BigInteger n) {
 		BigInteger a = BigInteger.ONE;
@@ -72,7 +79,16 @@ public class Utills {
 		return a.subtract(BigInteger.ONE);
 	}
 	
-
+	public static BigInteger setW_New(Paillier publickKey,BigInteger ci,BigInteger input,int N){
+		BigInteger w = Utills.BigIntegerPow(ci,input);
+		//System.out.println("w is :"+w);
+		//Random plaintext sB:
+		BigInteger sB = new BigInteger("0");
+		//System.out.println("Sb is :"+sB);
+		//Random nonce r': 
+		BigInteger r1 = Utills.generateRandomBigInteger(N);
+		return w.multiply(publickKey.Encryption(sB.negate(),r1));
+	}
 
 	public static BigInteger setW(Paillier publickKey,BigInteger ci,BigInteger input,int N){
 		BigInteger w = Utills.BigIntegerPow(ci,input);
@@ -85,11 +101,47 @@ public class Utills {
 		return w.multiply(publickKey.Encryption(sB.negate(),r1));
 	}
 
-	public static BigInteger checkResult(Client clientA, Client clientB) {
-		BigInteger x1_x2 = clientA.getX().subtract(clientB.getX()).pow(2);
-		BigInteger y1_y2 = clientA.getY().subtract(clientB.getY()).pow(2);
+	public static double checkResult(Client clientA, Client clientB) {
+		double x1_x2 = Math.pow((clientA.getNorthing()-clientB.getNorthing()),2);
+		double y1_y2 = Math.pow((clientA.getEasting()-clientB.getEasting()),2);
 		
 		
-		return sqrt(x1_x2.add(y1_y2));
+		return Math.sqrt(x1_x2+y1_y2);
+	}
+	
+	public static double convertToDouble(BigInteger bigInteger){
+		String temp = bigInteger.toString();
+		double result = Double.parseDouble(temp);
+		return result;
+	}
+	
+	public static int cutDigit(double number,int n){
+		int count=0;
+		double temp = number;
+		while(number>1){
+			number = number/10;
+			count++;
+		}
+		if(count>n){
+			temp = temp / Math.pow(10,count-n);
+			return (int) ( temp * Math.pow(10,count-n));
+		}
+		else
+			return (int) temp;
+	}
+	
+	
+	public static BigInteger cutNumber(BigInteger number,int dataLength){
+		int newNumber = (int) convertToDouble(number);
+		int temp = (int) ( (newNumber % Math.pow(10,dataLength)) );
+		
+		//System.out.println("new number is "+temp);
+		return new BigInteger(""+ temp);
+	}
+	
+	public static int sameDigit(double number1, double number2){
+		int count = 0;
+		
+		return count;
 	}
 }

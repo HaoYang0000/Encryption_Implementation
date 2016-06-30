@@ -6,7 +6,8 @@ public class Deg2UTM
 	    double Northing;
 	    int Zone;
 	    char Letter;
-	    private  Deg2UTM(double Lat,double Lon)
+	    
+	    Deg2UTM(double Lat,double Lon)
 	    {
 	        Zone= (int) Math.floor(Lon/6+31);
 	        if (Lat<-72) 
@@ -56,7 +57,33 @@ public class Deg2UTM
 	            Northing = Northing + 10000000;
 	        Northing=Math.round(Northing*100)*0.01;
 	    }
+		public double getEasting() {
+			return Easting;
+		}
+		public void setEasting(double easting) {
+			Easting = easting;
+		}
+		public double getNorthing() {
+			return Northing;
+		}
+		public void setNorthing(double northing) {
+			Northing = northing;
+		}
+		public int getZone() {
+			return Zone;
+		}
+		public void setZone(int zone) {
+			Zone = zone;
+		}
+		public char getLetter() {
+			return Letter;
+		}
+		public void setLetter(char letter) {
+			Letter = letter;
+		}
 	}
+
+	
 
 	class UTM2Deg
 	{
