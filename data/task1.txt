@@ -1,0 +1,178 @@
+round 1:
+computation time of encrypt 7 digit is 0.334881ms
+Power operation of 3 digit is 2.243148ms
+Power operation of 4 digit is 41.163167ms
+Power operation of 5 digit is 496.387447ms
+Power operation of 6 digit is 8051.035061ms
+Power operation of 7 digit is 207190.160717ms
+Decryption time of 3 digit is 1.534889ms
+Decryption time of 4 digit is 7.370636ms
+Decryption time of 5 digit is 146.401714ms
+Decryption time of 6 digit is 3652.401751ms
+Decryption time of 7 digit is 107836.126884ms
+round 2:
+computation time of encrypt 7 digit is 0.147534ms
+Power operation of 3 digit is 0.237625ms
+Power operation of 4 digit is 7.342416ms
+Power operation of 5 digit is 317.662197ms
+Power operation of 6 digit is 7792.036361ms
+Power operation of 7 digit is 205652.022261ms
+Decryption time of 3 digit is 0.438607ms
+Decryption time of 4 digit is 4.663577ms
+Decryption time of 5 digit is 125.713733ms
+Decryption time of 6 digit is 3718.681644ms
+Decryption time of 7 digit is 107661.536661ms
+round 3:
+computation time of encrypt 7 digit is 0.155103ms
+Power operation of 3 digit is 0.395488ms
+Power operation of 4 digit is 7.526614ms
+Power operation of 5 digit is 334.950323ms
+Power operation of 6 digit is 8099.335341ms
+Power operation of 7 digit is 210806.901687ms
+Decryption time of 3 digit is 0.470515ms
+Decryption time of 4 digit is 5.150741ms
+Decryption time of 5 digit is 150.247544ms
+Decryption time of 6 digit is 3756.170685ms
+Decryption time of 7 digit is 110395.372771ms
+round 4:
+computation time of encrypt 7 digit is 0.129911ms
+Power operation of 3 digit is 0.398801ms
+Power operation of 4 digit is 7.405282ms
+Power operation of 5 digit is 322.597716ms
+Power operation of 6 digit is 8068.36171ms
+Power operation of 7 digit is 208992.769829ms
+Decryption time of 3 digit is 0.359673ms
+Decryption time of 4 digit is 5.847185ms
+Decryption time of 5 digit is 124.997164ms
+Decryption time of 6 digit is 3744.25826ms
+Decryption time of 7 digit is 109781.002555ms
+round 5:
+computation time of encrypt 7 digit is 0.110961ms
+Power operation of 3 digit is 0.236006ms
+Power operation of 4 digit is 7.35417ms
+Power operation of 5 digit is 319.913175ms
+Power operation of 6 digit is 8018.867043ms
+Power operation of 7 digit is 208020.623197ms
+Decryption time of 3 digit is 0.34113ms
+Decryption time of 4 digit is 4.621762ms
+Decryption time of 5 digit is 125.524732ms
+Decryption time of 6 digit is 3786.628061ms
+Decryption time of 7 digit is 109787.158111ms
+round 6:
+computation time of encrypt 7 digit is 0.139033ms
+Power operation of 3 digit is 0.265568ms
+Power operation of 4 digit is 7.650858ms
+Power operation of 5 digit is 329.170662ms
+Power operation of 6 digit is 7940.131225ms
+Power operation of 7 digit is 208437.87597ms
+Decryption time of 3 digit is 0.36315ms
+Decryption time of 4 digit is 4.621805ms
+Decryption time of 5 digit is 124.11648ms
+Decryption time of 6 digit is 3745.680691ms
+Decryption time of 7 digit is 109306.526212ms
+round 7:
+computation time of encrypt 7 digit is 0.109875ms
+Power operation of 3 digit is 0.238059ms
+Power operation of 4 digit is 7.38859ms
+Power operation of 5 digit is 328.47258ms
+Power operation of 6 digit is 8244.511065ms
+Power operation of 7 digit is 208652.191154ms
+Decryption time of 3 digit is 0.340261ms
+Decryption time of 4 digit is 4.68752ms
+Decryption time of 5 digit is 125.732085ms
+Decryption time of 6 digit is 3701.932828ms
+Decryption time of 7 digit is 109577.692054ms
+round 8:
+computation time of encrypt 7 digit is 0.08818ms
+Power operation of 3 digit is 0.236335ms
+Power operation of 4 digit is 7.308428ms
+Power operation of 5 digit is 320.671855ms
+Power operation of 6 digit is 7923.030548ms
+Power operation of 7 digit is 207512.373824ms
+Decryption time of 3 digit is 0.328726ms
+Decryption time of 4 digit is 4.588872ms
+Decryption time of 5 digit is 129.950529ms
+Decryption time of 6 digit is 3778.329924ms
+Decryption time of 7 digit is 109639.875601ms
+round 9:
+computation time of encrypt 7 digit is 0.088586ms
+Power operation of 3 digit is 0.234776ms
+Power operation of 4 digit is 7.28994ms
+Power operation of 5 digit is 320.067314ms
+Power operation of 6 digit is 7862.659843ms
+Power operation of 7 digit is 207736.426112ms
+Decryption time of 3 digit is 0.303064ms
+Decryption time of 4 digit is 4.529832ms
+Decryption time of 5 digit is 132.891933ms
+Decryption time of 6 digit is 3770.220947ms
+Decryption time of 7 digit is 108649.336785ms
+round 10:
+computation time of encrypt 7 digit is 0.131836ms
+Power operation of 3 digit is 0.41904ms
+Power operation of 4 digit is 7.502611ms
+Power operation of 5 digit is 322.472675ms
+Power operation of 6 digit is 8008.907029ms
+Power operation of 7 digit is 208652.745936ms
+Decryption time of 3 digit is 0.347501ms
+Decryption time of 4 digit is 4.522131ms
+Decryption time of 5 digit is 129.108907ms
+Decryption time of 6 digit is 3742.490433ms
+Decryption time of 7 digit is 111724.748525ms
+
+Finding the average computation time of old algrothim:
+
+Average computation time of encrypt 7 digit is 0ms
+Average power operation of 3 digit is 0ms
+Average power operation of 4 digit is 10ms
+Average power operation of 5 digit is 340ms
+Average power operation of 6 digit is 8000ms
+Average power operation of 7 digit is 208164ms
+Average decryption time of 3 digit is 0ms
+Average decryption time of 4 digit is 4ms
+Average decryption time of 5 digit is 130ms
+Average decryption time of 6 digit is 3739ms
+Average decryption time of 7 digit is 1094355ms
+
+Using new algrothim:
+
+Distance between : user 1 and user 1 is 2686899m
+computation time is 23.255483ms
+Running time is 28.007187ms
+
+Distance between : user 1 and user 1 is 2686899m
+computation time is 13.149034ms
+Running time of 6 digit is 14.320355ms
+
+Distance between : user 1 and user 1 is 2686899m
+computation time is 8.190886ms
+Running time of 6 digit is 9.120698ms
+
+Distance between : user 1 and user 1 is 2686899m
+computation time is 7.883549ms
+Running time of 6 digit is 8.53874ms
+
+Distance between : user 1 and user 1 is 2686899m
+computation time is 6.060565ms
+Running time of 6 digit is 6.689051ms
+
+Distance between : user 1 and user 1 is 2686899m
+computation time is 3.871308ms
+Running time of 6 digit is 4.414527ms
+
+Distance between : user 1 and user 1 is 2686899m
+computation time is 6.074629ms
+Running time of 6 digit is 6.503473ms
+
+Distance between : user 1 and user 1 is 2686899m
+computation time is 7.07227ms
+Running time of 6 digit is 7.629533ms
+
+Distance between : user 1 and user 1 is 2686899m
+computation time is 6.176065ms
+Running time of 6 digit is 6.785568ms
+
+Distance between : user 1 and user 1 is 2686899m
+computation time is 3.43147ms
+Running time of 6 digit is 3.840566ms
+
+Average running time of new algrothim: 9.5849698ms
