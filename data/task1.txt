@@ -119,7 +119,7 @@ Decryption time of 5 digit is 129.108907ms
 Decryption time of 6 digit is 3742.490433ms
 Decryption time of 7 digit is 111724.748525ms
 
-Finding the average computation time of old algrothim:
+Finding the average computation time of old algorithm:
 
 Average computation time of encrypt 7 digit is 0ms
 Average power operation of 3 digit is 0ms
@@ -133,7 +133,7 @@ Average decryption time of 5 digit is 130ms
 Average decryption time of 6 digit is 3739ms
 Average decryption time of 7 digit is 1094355ms
 
-Using new algrothim:
+Using new algorithm:
 
 Distance between : user 1 and user 1 is 2686899m
 computation time is 23.255483ms
@@ -175,4 +175,4 @@ Distance between : user 1 and user 1 is 2686899m
 computation time is 3.43147ms
 Running time of 6 digit is 3.840566ms
 
-Average running time of new algrothim: 9.5849698ms
+Average running time of new algorithm: 9.5849698ms
