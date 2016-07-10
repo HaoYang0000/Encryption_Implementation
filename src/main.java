@@ -18,6 +18,8 @@ public class main {
 		public double runningTime=0;
 		public int userNumber=0;
 		public double savedTime=0;
+		public int occurTime = 0;
+		public double averageError = 0;
 		Result(long endtime,long startTime, int userNumber){
 			this.runningTime = (endtime-startTime)/1000000.0;
 			this.userNumber = userNumber;
@@ -36,8 +38,9 @@ public class main {
 
 		//task2();
 
-		task3();
+		//task3();
 
+		task4();
 
 		/**
 		 * Use this method help to finish task 4
@@ -204,12 +207,9 @@ public class main {
 	}
 
 	/**
-	 * Task 4: Speed prediction (Not done yet) 
+	 * Task 4: Speed prediction 
 	 */
 	public static void task4(){
-		boolean predictMode = false;
-		int levelCounter = 0;
-
 		//Reading files and generate Clients
 		Scanner s = null;
 		ArrayList<String> fileName = new ArrayList<String>();
@@ -233,50 +233,45 @@ public class main {
 
 			long totalTimeStart = System.nanoTime();
 			counter=0;
+
 			BigInteger holder = new BigInteger("0");
-			BigInteger diff = new BigInteger("0");
-			BigInteger temp = new BigInteger("0");
-			BigInteger speed = new BigInteger("0");
-			ArrayList<Double> speedList = new ArrayList<Double>();
 
+			ArrayList<Double> rangeList = new ArrayList<Double>();
+			boolean predictMode = false;
+
+			//Variables to help save the results
+			double tempTime = 0;
+			int occurTime = 0;
+			double averageError = 0;
 			for(int j=0; j<list.size();j++){
+				long startTime = System.nanoTime();
 				Client b = list.get(j);
-				if(i==0){
-					holder = computeDistance(base,b);
-					temp = holder;
-				}
-				else{
-					holder = temp;
-					temp = computeDistance(base,b);
-					speedList.add(Utills.convertToDouble(temp.subtract(holder)));
-					if(predictMode == true){
-						System.out.println("The predict position is "+holder.add(speed)+ ", the real distance is "+temp);
-					}
-					else{
-						if(i%5==0){
-							//Calculate speed
-							speed = diff.divide(new BigInteger("5"));
-							System.out.println("The speed is "+speed+ ", predict mode is on now.");
-							predictMode = true;
-							Utills.computeSTD(speedList);
-						}	
-						
-					}
-					
-					
-					
-					if(predictMode == false){
-						long startTime = System.nanoTime();
-						
-						long endTime = System.nanoTime();
-					}
-
-				}
+				holder = computeDistance(base,b);
+				rangeList.add(Utills.convertToDouble(holder));
 				
-			}
-			//System.out.println("Computation time is = "+((endTime-startTime)/1000000.0)+"ms");
-			//System.out.println();
+				//!!Change j here to make different test
+				if(j%5==0 && j>0){
+					//!!Change STD here to make different test
+					if(Utills.computeSTD(rangeList)>=10 && predictMode == true){
+						System.out.println("Predict mode is off now. The STD is "+ Utills.computeSTD(rangeList));
+						predictMode = false;
+					}
+					//!!Change STD here to make different test
+					//Calculate speed and see if the predict mode is on
+					else if(Utills.computeSTD(rangeList)<10){
+						System.out.println("Predict mode is on now. The STD is "+ Utills.computeSTD(rangeList));
+						predictMode = true;
+					}
+					if(predictMode == true){
+						occurTime++;
+						averageError = averageError + Math.abs(((rangeList.get(j-1)+Utills.predictDistance(rangeList)) - Utills.convertToDouble(holder)));
+						System.out.println("The predict position is "+(rangeList.get(j-1)+Utills.predictDistance(rangeList))+ ", the real distance is "+holder);
+					}
+				}
+				long endTime = System.nanoTime();
+				tempTime = (endTime - startTime)/1000000.0;
 
+			}
 
 			long totalTimeEnd = System.nanoTime();
 			System.out.println("---------------------------------");
@@ -284,35 +279,41 @@ public class main {
 			System.out.println("The number of user is "+list.size());
 			System.out.println("Average computation time is = "+((totalTimeEnd-totalTimeStart)/1000000.0/counter)+"ms");
 
-//			Result temp = new Result(totalTimeEnd,totalTimeStart,counter);
-//			result[i] = temp;
+			Result temp = new Result(totalTimeEnd,totalTimeStart,counter);
+			temp.savedTime = tempTime;
+			temp.occurTime = occurTime;
+			temp.averageError = averageError/occurTime;
+			result[i] = temp;
 
 		}
 
-		/**
-		 * Sorting the result
-		 */
-		for(int i=0;i<result.length;i++){
-			for(int j=i+1;j<result.length;j++){
-				if(result[i].userNumber >= result[j].userNumber){
-					Result temp = result[j];
-					result[j] = result[i];
-					result[i] = temp;
-				}
-			}
-		}
-
-		/**
-		 * Print out results
-		 */
-		System.out.println("------------------");
-		for(int i=0;i<result.length;i++){
-			System.out.println(result[i].userNumber );
-		}
-		System.out.println("------------------");
-		for(int i=0;i<result.length;i++){
-			System.out.println(result[i].runningTime );
-		}
+		//		/**
+		//		 * Sorting the result
+		//		 */
+		//		for(int i=0;i<result.length;i++){
+		//			for(int j=i+1;j<result.length;j++){
+		//				if(result[i].userNumber >= result[j].userNumber){
+		//					Result temp = result[j];
+		//					result[j] = result[i];
+		//					result[i] = temp;
+		//				}
+		//			}
+		//		}
+		//
+				/**
+				 * Print out results
+				 */
+				System.out.println("------------------");
+				for(int i=0;i<result.length;i++){
+					if(result[i].occurTime != 0)
+						System.out.println("In the "+(i+1)+" round, "+" saved "+result[i].savedTime
+								+"ms, and the predict mode is on for "+ result[i].occurTime +" times, "
+								+"the average error of prediction is "+ result[i].averageError+ "m.");
+					}
+//				System.out.println("------------------");
+//				for(int i=0;i<result.length;i++){
+//					System.out.println(result[i].runningTime );
+//				}
 	}
 
 	/**
